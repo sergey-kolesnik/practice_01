@@ -1,5 +1,10 @@
 import datetime
-from typing import Union
+from pyfiglet import Figlet
+
+
+
+star_font = Figlet(font="3-d")
+
 
 def get_input():
     """Запрашивает дату рождения пользователя."""
@@ -23,26 +28,22 @@ def calculate_age(born: datetime.date) -> int:
     age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     return age
 
-def print_stars(number: Union[int, float]) -> None:
-    """Печатает звездочки вместо цифр."""
-    stars = '★' * len(str(number))
-    print(stars)
-
 def main():
     day, month, year = get_input()
     birthday = datetime.date(year, month, day)
-    current_year = datetime.date.today().year
     weekday = birthday.weekday()
     leap_year = is_leap_year(year)
     age = calculate_age(birthday)
+    result_art = star_font.renderText(f"{day}.{month}.{year}")
     
     print(f"\nВаш день рождения приходится на {['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье'][weekday]}")
     print(f"{year} был {'' if leap_year else 'не'} високосным годом.")
     print(f"Вам сейчас {age} лет.")
+    print(result_art.replace("/", " "))
+
+
 
     
-    for part in (day, month, year):
-        print_stars(part)
 
 if __name__ == "__main__":
     main()
